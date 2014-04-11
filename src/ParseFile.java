@@ -5,40 +5,44 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ParseFile {
 
 	static List<Node> nodeList = new ArrayList<Node>();
-	
-	public static List<Node> parseConfigFile(int id){
-		int totalNodes=0;
+
+	public static List<Node> parseConfigFile(int id) {
 		String line;
-		
-		for(int i=id;i<totalNodes-1;i++){
-			
-			Node newNode = new Node();
-			try {
-				BufferedReader readFile = new BufferedReader(new FileReader("Config"));
-				
-				while((line = readFile.readLine())!=null){
+
+		BufferedReader readFile;
+		try {
+			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplication/Config"));
+			while ((line = readFile.readLine()) != null) {
+
+				if (!line.startsWith("#")) {
+
 					String[] data = line.split(" ");
-					if(data[1].equals("#")){
-						continue;
+					if (data[1].equals("#")) {
+						TCPRunner.totalNodes = Integer.parseInt(data[0]);
+						System.out.println("Total nodes : " + TCPRunner.totalNodes);
+					} else {
+
+						Node n = new Node();
+						int nodeid = Integer.parseInt(data[0]);
+						String ip = data[1];
+						int port = Integer.parseInt(data[2]);
+						n.id = nodeid;
+						n.ipaddr = ip;
+						n.portno = port;
+						nodeList.add(n);
+
 					}
-					newNode.id = Integer.parseInt(data[0]);
-					newNode.ipaddr = data[1];
-					newNode.portno = Integer.parseInt(data[2]);
-					nodeList.add(newNode);
-					
 				}
-				
-				
-			} catch (FileNotFoundException e) {
-				System.out.println("Config file not found");
-				e.printStackTrace();
-			} catch(IOException e){
-				e.printStackTrace();
 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return nodeList;
 	}
