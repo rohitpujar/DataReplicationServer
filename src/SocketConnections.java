@@ -5,22 +5,34 @@ import java.util.Map;
 
 public class SocketConnections {
 
-	static private Map<Integer, Socket> socketConnections = new HashMap<Integer, Socket>();
+	private static int totalNodes;
+	static private Map<Integer, Socket> serverSocketConnections = new HashMap<Integer, Socket>();
+	static private Map<Integer, Socket> clientSocketConnections = new HashMap<Integer, Socket>();
 
-	public static Map<Integer, Socket> getSocketConnections() {
-		return socketConnections;
+	public static Map<Integer, Socket> getServerSocketConnections() {
+		return serverSocketConnections;
+	}
+	
+	public static Map<Integer, Socket> getClientSocketConnections() {
+		return clientSocketConnections;
 	}
 
-	public static void addToSocketConnections(Integer id, Socket socket) {
+	public static void addToServerSocketConnections(Integer id, Socket socket) {
 
-		socketConnections.put(id, socket);
-		System.out.println("Node " + id + " added to socket connections...");
+		serverSocketConnections.put(id, socket);
+//		System.out.println("Node " + id + " added to #server socket connections...");
+	}
+
+
+	public static void addToClientSocketConnections(Integer id, Socket socket) {
+		clientSocketConnections.put(id, socket);
+//		System.out.println("Node " + id + " added to *client socket connections...");
 	}
 
 	public static void displaySocketConnections() {
 
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		Iterator it = socketConnections.entrySet().iterator();
+		Iterator it = serverSocketConnections.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
 			System.out.println(pairs.getKey() + " = " + pairs.getValue());
@@ -28,9 +40,23 @@ public class SocketConnections {
 
 	}
 
-	public static int getSocketConnectionsSize() {
+	public static int getServerSocketConnectionsSize() {
 
-		return socketConnections.size();
+		return serverSocketConnections.size();
+	}
+	
+	public static int getClientSocketConnectionsSize() {
+
+		return clientSocketConnections.size();
 	}
 
+	public static int getTotalNodes() {
+		return totalNodes;
+	}
+
+	public static void setTotalNodes(int totalNodes) {
+		SocketConnections.totalNodes = totalNodes;
+	}
+
+	
 }

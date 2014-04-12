@@ -14,15 +14,15 @@ public class ParseFile {
 
 		BufferedReader readFile;
 		try {
-			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplication/Config"));
+			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplicationServer/Config"));
 			while ((line = readFile.readLine()) != null) {
 
 				if (!line.startsWith("#")) {
 
 					String[] data = line.split(" ");
 					if (data[1].equals("#")) {
-						TCPRunner.totalNodes = Integer.parseInt(data[0]);
-						System.out.println("Total nodes : " + TCPRunner.totalNodes);
+						SocketConnections.setTotalNodes(Integer.parseInt(data[0]));
+						System.out.println("Total nodes : " + SocketConnections.getTotalNodes());
 					} else {
 
 						Node n = new Node();

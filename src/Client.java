@@ -10,16 +10,19 @@ public class Client {
 
 	public void connectToServers(List<Node> nodeList, int id) {
 		this.nodeId = id;
-		System.out.println("My node id is " + id);
 		++id;
-		System.out.println("Sending requests to node id onwards... " + id);
 		System.out.println("Bring them up in 15 secs...");
 		try {
 			Thread.sleep(15000);
 			for (int i = id; i < nodeList.size(); i++) {
 				Socket clientSocket = new Socket(nodeList.get(i).ipaddr, nodeList.get(i).portno);
-				SocketConnections.addToSocketConnections(nodeList.get(i).id, clientSocket);
-				System.out.println("Total socket connections : " + SocketConnections.getSocketConnectionsSize());
+				SocketConnections.addToServerSocketConnections(nodeList.get(i).id, clientSocket);
+//				System.out.println("Total socket connections : " + SocketConnections.getServerSocketConnectionsSize());
+//				************
+				System.out.println("					Successfully connected to ^Server^ no : " + nodeList.get(i).id + " , HostName : "
+						+ clientSocket.getInetAddress().getHostName());
+//				************
+				
 				msgReceive = new MessageReceiver(nodeId, clientSocket);
 				msgReceive.start();
 			}

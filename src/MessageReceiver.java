@@ -6,9 +6,10 @@ public class MessageReceiver extends Thread {
 
 	DataInputStream dis;
 	Socket socket;
+	int nodeId;
 
 	public MessageReceiver(int id, Socket socket) {
-
+		this.nodeId = id;
 		this.socket = socket;
 
 	}
@@ -18,7 +19,6 @@ public class MessageReceiver extends Thread {
 
 		try {
 			dis = new DataInputStream(socket.getInputStream());
-			System.out.println("Client connection successful with : " + socket.getInetAddress().getHostName());
 
 			while (true) {
 				String message = dis.readUTF().toString();

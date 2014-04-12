@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +8,8 @@ public class TCPRunner {
 	static int nodeId;
 	Map<Integer, Integer> serverPorts;
 	static List<Node> nodeList;
-	static int totalNodes;
 
-	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
+	public static void main(String[] args) {
 
 		TCPRunner tcpRunner = new TCPRunner();
 		nodeList = readConfigFile();
@@ -27,7 +24,7 @@ public class TCPRunner {
 		server.start();
 	}
 
-	public void connectToServers(List<Node> nodeList, int id) throws UnknownHostException, IOException, InterruptedException {
+	public void connectToServers(List<Node> nodeList, int id) {
 		Client client = new Client();
 		client.connectToServers(nodeList, nodeId);
 	}
