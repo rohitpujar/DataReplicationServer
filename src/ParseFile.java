@@ -58,29 +58,29 @@ public class ParseFile {
 			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplicationServer/PartitionConfig"));
 			while ((line = readFile.readLine()) != null) {
 
-				if (!line.startsWith("#")) {
+				if (!line.startsWith("#")) { // to ignore comments, if any
 
-					String[] data = line.split(" ");
+					String[] data = line.split(" "); // split by space
 					if (data[0].equals("Partition1")) {
 
-						line = readFile.readLine();
-						String[] fileData = line.split(" ");
-						if (fileData[0].equals("server")) {
-							String[] serverPartition = fileData[1].split(",");
+						line = readFile.readLine(); // read next line
+						String[] fileData = line.split(" "); // take only the node numbers which is after the space
+						if (fileData[0].equals("server")) { // these nodes belong to server partition information
+							String[] serverPartition = fileData[1].split(","); // they are separated by comma, so fetch them
 
 							serverPartitionData1 = new int[serverPartition.length];
 							for (int i = 0; i < serverPartition.length; i++) {
-								serverPartitionData1[i] = Integer.parseInt(serverPartition[i]);
+								serverPartitionData1[i] = Integer.parseInt(serverPartition[i]); // the server partition is in the serverPartitionData1
 							}
 						}
 						line = readFile.readLine();
 						String[] fileData1 = line.split(" ");
-						if (fileData1[0].equals("client")) {
+						if (fileData1[0].equals("client")) { // similarly for client partition nodes information
 							String[] clientPartition = fileData1[1].split(",");
 
 							clientPartitionData1 = new int[clientPartition.length];
 							for (int i = 0; i < clientPartition.length; i++) {
-								clientPartitionData1[i] = Integer.parseInt(clientPartition[i]);
+								clientPartitionData1[i] = Integer.parseInt(clientPartition[i]); // client partition data is present here
 							}
 						}
 						for (int i = 0; i < serverPartitionData1.length; i++) {
@@ -117,7 +117,6 @@ public class ParseFile {
 						}
 						for (int i = 0; i < serverPartitionData2.length; i++) {
 							if (serverPartitionData2[i] == nodeId) {
-								// System.out.println("Node Id " + nodeId + "Present here in server partition 2");
 								createPartition(serverPartitionData2, clientPartitionData2);
 							}
 						}
@@ -137,11 +136,12 @@ public class ParseFile {
 	}
 
 	private static void createPartition(int[] serverPartition, int[] clientPartition) {
+
 		System.out.println("---Initial partition status---");
-		PartitionHandler.displayServerConnectionStatusMap();
-		PartitionHandler.createServerPartition(serverPartition, clientPartition);
+		PartitionHandler.displayConnectionStatusMap();
+		PartitionHandler.createPartition(serverPartition, clientPartition);
 		System.out.println("----- Partition done -----");
-		PartitionHandler.displayServerConnectionStatusMap();
+		PartitionHandler.displayConnectionStatusMap();
 
 	}
 }

@@ -24,7 +24,6 @@ public class PartitionHandler {
 			Map.Entry<Integer, Boolean> pairs = it.next();
 			pairs.setValue(false);
 		}
-		System.out.println("Server connections all set to false...");
 	}
 
 	// sets all client connections to false
@@ -35,7 +34,6 @@ public class PartitionHandler {
 			Map.Entry<Integer, Boolean> pairs = it.next();
 			pairs.setValue(false);
 		}
-		System.out.println("Client connections all set to false...");
 	}
 
 	// set server connection - data is received as and when sockets are created
@@ -57,24 +55,33 @@ public class PartitionHandler {
 	}
 
 	// input from the network partition config file
-	public static void createServerPartition(int[] serverConnectionData, int[] clientConnectionData) {
-		// setClientConnectionsToFalse(); // set every client connection to false
+	public static void createPartition(int[] serverConnectionData, int[] clientConnectionData) {
+		setClientConnectionsToFalse(); // set every client connection to false
 		setServerConnectionsToFalse(); // set every server connection to false
 		for (int i = 0; i < serverConnectionData.length; i++) {
 			serverConnection.put(serverConnectionData[i], true);
 		}
+		// creating the partition including the client connections too
+		for (int i = 0; i < clientConnectionData.length; i++) {
+			clientConnection.put(clientConnectionData[i], true);
+		}
 
-		/*
-		 * for (int i = 0; i < clientConnectionData.length; i++) { clientConnection.put(i, true); }
-		 */
 	}
 
-	public static void displayServerConnectionStatusMap() {
+	public static void displayConnectionStatusMap() {
 		Iterator<Map.Entry<Integer, Boolean>> it = serverConnection.entrySet().iterator();
+		System.out.println("- Servers -");
 		while (it.hasNext()) {
 			Map.Entry<Integer, Boolean> pairs = it.next();
 			System.out.println(pairs.getKey() + " : " + pairs.getValue());
 		}
+		Iterator<Map.Entry<Integer, Boolean>> iterator = clientConnection.entrySet().iterator();
+		System.out.println("- Clients -");
+		while (iterator.hasNext()) {
+			Map.Entry<Integer, Boolean> pairs1 = iterator.next();
+			System.out.println(pairs1.getKey() + " " + pairs1.getValue());
+		}
+
 	}
 
 }
