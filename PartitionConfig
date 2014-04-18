@@ -1,0 +1,7 @@
+Partition1 #
+server 0,1
+client 2,3
+
+Partition2 #
+server 2,3
+client 1,4

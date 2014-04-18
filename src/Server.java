@@ -4,11 +4,13 @@ import java.net.Socket;
 
 public class Server extends Thread {
 
-	static int nodeId;
+	// static int nodeId;
 	// identifying the node numbers as I get the requests between the servers
 	static int serverConnectionCount;
 	static int clientConnectionCount;
 	int portNo;
+	static int serverNodeNumber; // only to identify the node numbers when you get connection requests, not to be confused
+	static int clientNodeNumber;
 
 	public Server(int portNo) {
 		this.portNo = portNo;
@@ -23,18 +25,22 @@ public class Server extends Thread {
 				if (!(SocketConnections.getServerSocketConnectionsSize() == SocketConnections.getTotalNodes() - 1)) {
 					System.out.println("					Successfully connected to ^Server^ no : " + serverConnectionCount + " , HostName : "
 							+ socket.getInetAddress().getHostName());
-					// System.out.println("~~~~ Adding socket to #### Server connections...");
-					SocketConnections.addToServerSocketConnections(serverConnectionCount++, socket);
-					// System.out.println("Total socket connections between servers: " + SocketConnections.getServerSocketConnectionsSize());
-					MessageReceiver msgReceiver = new MessageReceiver(nodeId, socket);
+					serverNodeNumber = serverConnectionCount++;
+					SocketConnections.addToServerSocketConnections(serverNodeNumber, socket);
+					// SocketConnections.addToServerSocketConnectionStatus(serverNodeNumber,true);
+					PartitionHandler.setServerConnectionStatus(serverNodeNumber, true);
+					MessageReceiver msgReceiver = new MessageReceiver(SocketConnections.getNodeId(), socket);
 					msgReceiver.start(); // open the stream for incoming messages
 				} else {
 					System.out.println("Successfully connected to ^Client^ no : " + clientConnectionCount + " , HostName : "
 							+ socket.getInetAddress().getHostName());
 					// System.out.println("					~~~~ Adding socket to **** Client connections...");
-					SocketConnections.addToClientSocketConnections(clientConnectionCount++, socket);
+					clientNodeNumber = clientConnectionCount++;
+					SocketConnections.addToClientSocketConnections(clientNodeNumber, socket);
+					// SocketConnections.addToClientSocketConnectionStatus(clientNodeNumber, true);
+					PartitionHandler.setClientConnectionStatus(clientNodeNumber, true);
 					// System.out.println("					Total socket connections to clients: " + SocketConnections.getClientSocketConnectionsSize());
-					MessageReceiver msgReceiver = new MessageReceiver(nodeId, socket);
+					MessageReceiver msgReceiver = new MessageReceiver(SocketConnections.getNodeId(), socket);
 					msgReceiver.start();
 
 				}

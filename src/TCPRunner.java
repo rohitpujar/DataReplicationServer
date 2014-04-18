@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class TCPRunner {
 
-	static int nodeId;
 	Map<Integer, Integer> serverPorts;
 	static List<Node> nodeList;
 
@@ -13,8 +12,16 @@ public class TCPRunner {
 
 		TCPRunner tcpRunner = new TCPRunner();
 		nodeList = readConfigFile();
-		tcpRunner.listenForConnections(nodeList, nodeId);
-		tcpRunner.connectToServers(nodeList, nodeId);
+		tcpRunner.listenForConnections(nodeList, SocketConnections.getNodeId());
+		tcpRunner.connectToServers(nodeList, SocketConnections.getNodeId());
+
+		System.out.println("Select the following :");
+		System.out.println("1 to create network partition");
+		Scanner in = new Scanner(System.in);
+		int input = in.nextInt();
+		if (input == 1) {
+			createPartition();
+		}
 
 	}
 
@@ -26,7 +33,7 @@ public class TCPRunner {
 
 	public void connectToServers(List<Node> nodeList, int id) {
 		Client client = new Client();
-		client.connectToServers(nodeList, nodeId);
+		client.connectToServers(nodeList, SocketConnections.getNodeId());
 	}
 
 	private static Map<Integer, Integer> getPortNumbers(List<Node> nodeList) {
@@ -41,10 +48,14 @@ public class TCPRunner {
 
 		Scanner in = new Scanner(System.in);
 		System.out.println("Please enter Node id");
-		nodeId = in.nextInt();
-		List<Node> nodeList = ParseFile.parseConfigFile(nodeId);
+		SocketConnections.setNodeId(in.nextInt());
+		List<Node> nodeList = ParseFile.parseConfigFile(SocketConnections.getNodeId());
 		return nodeList;
 
+	}
+
+	private static void createPartition() {
+		ParseFile.parsePartitionConfigFile(SocketConnections.getNodeId());
 	}
 
 }

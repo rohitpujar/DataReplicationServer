@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParseFile {
-
 	static List<Node> nodeList = new ArrayList<Node>();
 
 	public static List<Node> parseConfigFile(int id) {
@@ -45,5 +44,104 @@ public class ParseFile {
 			e.printStackTrace();
 		}
 		return nodeList;
+	}
+
+	public static void parsePartitionConfigFile(int nodeId) {
+		String line;
+		int[] serverPartitionData1 = null;
+		int[] clientPartitionData1 = null;
+		int[] serverPartitionData2 = null;
+		int[] clientPartitionData2 = null;
+
+		BufferedReader readFile;
+		try {
+			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplicationServer/PartitionConfig"));
+			while ((line = readFile.readLine()) != null) {
+
+				if (!line.startsWith("#")) {
+
+					String[] data = line.split(" ");
+					if (data[0].equals("Partition1")) {
+
+						line = readFile.readLine();
+						String[] fileData = line.split(" ");
+						if (fileData[0].equals("server")) {
+							String[] serverPartition = fileData[1].split(",");
+
+							serverPartitionData1 = new int[serverPartition.length];
+							for (int i = 0; i < serverPartition.length; i++) {
+								serverPartitionData1[i] = Integer.parseInt(serverPartition[i]);
+							}
+						}
+						line = readFile.readLine();
+						String[] fileData1 = line.split(" ");
+						if (fileData1[0].equals("client")) {
+							String[] clientPartition = fileData1[1].split(",");
+
+							clientPartitionData1 = new int[clientPartition.length];
+							for (int i = 0; i < clientPartition.length; i++) {
+								clientPartitionData1[i] = Integer.parseInt(clientPartition[i]);
+							}
+						}
+						for (int i = 0; i < serverPartitionData1.length; i++) {
+							if (serverPartitionData1[i] == nodeId) {
+								// System.out.println("Node id " + nodeId + " Present here in server partition 1");
+								createPartition(serverPartitionData1, clientPartitionData1);
+							}
+						}
+
+						// ********************** Partition 2 config information **************************
+						line = readFile.readLine();
+						line = readFile.readLine();
+						line = readFile.readLine();
+
+						String[] fileData2 = line.split(" ");
+						if (fileData2[0].equals("server")) {
+							String[] serverPartition = fileData2[1].split(",");
+
+							serverPartitionData2 = new int[serverPartition.length];
+							for (int i = 0; i < serverPartition.length; i++) {
+								serverPartitionData2[i] = Integer.parseInt(serverPartition[i]);
+							}
+						}
+						line = readFile.readLine();
+						String[] fileData3 = line.split(" ");
+						if (fileData3[0].equals("client")) {
+							String[] clientPartition = fileData3[1].split(",");
+
+							clientPartitionData2 = new int[clientPartition.length];
+							for (int i = 0; i < clientPartition.length; i++) {
+								clientPartitionData2[i] = Integer.parseInt(clientPartition[i]);
+							}
+
+						}
+						for (int i = 0; i < serverPartitionData2.length; i++) {
+							if (serverPartitionData2[i] == nodeId) {
+								// System.out.println("Node Id " + nodeId + "Present here in server partition 2");
+								createPartition(serverPartitionData2, clientPartitionData2);
+							}
+						}
+
+						// **************
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private static void createPartition(int[] serverPartition, int[] clientPartition) {
+		System.out.println("---Initial partition status---");
+		PartitionHandler.displayServerConnectionStatusMap();
+		PartitionHandler.createServerPartition(serverPartition, clientPartition);
+		System.out.println("----- Partition done -----");
+		PartitionHandler.displayServerConnectionStatusMap();
+
 	}
 }

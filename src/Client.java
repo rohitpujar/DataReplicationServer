@@ -17,12 +17,14 @@ public class Client {
 			for (int i = id; i < nodeList.size(); i++) {
 				Socket clientSocket = new Socket(nodeList.get(i).ipaddr, nodeList.get(i).portno);
 				SocketConnections.addToServerSocketConnections(nodeList.get(i).id, clientSocket);
-//				System.out.println("Total socket connections : " + SocketConnections.getServerSocketConnectionsSize());
-//				************
+				// SocketConnections.addToServerSocketConnectionStatus(nodeList.get(i).id, true);
+				PartitionHandler.setServerConnectionStatus(nodeList.get(i).id, true);
+				// System.out.println("Total socket connections : " + SocketConnections.getServerSocketConnectionsSize());
+				// ************
 				System.out.println("					Successfully connected to ^Server^ no : " + nodeList.get(i).id + " , HostName : "
 						+ clientSocket.getInetAddress().getHostName());
-//				************
-				
+				// ************
+
 				msgReceive = new MessageReceiver(nodeId, clientSocket);
 				msgReceive.start();
 			}
