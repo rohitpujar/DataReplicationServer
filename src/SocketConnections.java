@@ -6,7 +6,7 @@ import java.util.Map;
 public class SocketConnections {
 
 	private static int totalNodes;
-	private static int nodeId;
+	private static int myNodeId;
 
 	// Server connections and Client connections to which it is connected
 	static private Map<Integer, Socket> serverSocketConnections = new HashMap<Integer, Socket>();
@@ -85,11 +85,11 @@ public class SocketConnections {
 	}
 
 	public static int getNodeId() {
-		return nodeId;
+		return myNodeId;
 	}
 
 	public static void setNodeId(int nodeId) {
-		SocketConnections.nodeId = nodeId;
+		SocketConnections.myNodeId = nodeId;
 	}
 
 }

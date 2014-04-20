@@ -10,7 +10,8 @@ public class MessageReceiver extends Thread {
 	DataInputStream dis;
 	Socket socket;
 	int nodeId;
-
+	MessageSender msgSender;
+	
 	public MessageReceiver(int id, Socket socket) {
 		this.nodeId = id;
 		this.socket = socket;
@@ -34,12 +35,25 @@ public class MessageReceiver extends Thread {
 				while (msgTokens.hasMoreTokens()) {
 					recvdMsgTokens.add(msgTokens.nextToken());
 				}
+				
+				if(recvdMsgTokens.get(0).equals("Ping")){
+					int clientId = Integer.parseInt(recvdMsgTokens.get(1));
+					pingMessage(recvdMsgTokens.get(0), clientId);
+				}
 
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void pingMessage(String message,int clientId){
+		msgSender = new MessageSender();
+		Boolean status = PartitionHandler.getClientConnectionStatus(clientId);
+		System.out.println("Connection to client "+clientId+" : "+status);
+		msgSender.sendMesageToClient(clientId, status.toString());
+		
 	}
 
 }

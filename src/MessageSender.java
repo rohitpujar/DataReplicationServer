@@ -6,10 +6,11 @@ public class MessageSender {
 
 	DataOutputStream dos;
 
-	public void sendMessage(int nodeId, String message) {
+	public void sendMessageToServer(int nodeId, String message) {
 
 		try {
-			dos = new DataOutputStream(SocketConnections.getServerSocketConnections().get(nodeId).getOutputStream());
+			Socket socket = SocketConnections.getServerSocketConnections().get(nodeId);
+			dos = new DataOutputStream(socket.getOutputStream());
 			dos.writeUTF(message);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -17,6 +18,14 @@ public class MessageSender {
 
 	}
 
+	public void sendMesageToClient(int nodeId,String message){
+		try{
+			dos = new DataOutputStream(SocketConnections.getClientSocketConnections().get(nodeId).getOutputStream());
+			dos.writeUTF(message);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 	public void sendToAll(String message) {
 
 		try {

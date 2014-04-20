@@ -67,7 +67,18 @@ public class PartitionHandler {
 		}
 
 	}
-
+	
+	// Gets the connection status for the particular client
+	public static Boolean getClientConnectionStatus(int clientId){
+		
+		return clientConnection.get(clientId);
+	}
+	
+//	Gets the connection status for the particular server
+	public static Boolean getServerConnectionStatus(int serverId){
+		
+		return serverConnection.get(serverId);
+	}
 	public static void displayConnectionStatusMap() {
 		Iterator<Map.Entry<Integer, Boolean>> it = serverConnection.entrySet().iterator();
 		System.out.println("- Servers -");
