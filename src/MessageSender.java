@@ -21,6 +21,7 @@ public class MessageSender {
 	public void sendMesageToClient(int nodeId,String message){
 		try{
 			dos = new DataOutputStream(SocketConnections.getClientSocketConnections().get(nodeId).getOutputStream());
+			System.out.println("			& Message to client "+nodeId+" : "+message);
 			dos.writeUTF(message);
 		}catch(IOException e){
 			e.printStackTrace();

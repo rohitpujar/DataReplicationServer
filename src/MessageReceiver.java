@@ -36,11 +36,16 @@ public class MessageReceiver extends Thread {
 					recvdMsgTokens.add(msgTokens.nextToken());
 				}
 				
-				if(recvdMsgTokens.get(0).equals("Ping")){
+				if(recvdMsgTokens.get(0).equals("PING")){
+					System.out.println("Inside PING receiver ...");
 					int clientId = Integer.parseInt(recvdMsgTokens.get(1));
 					pingMessage(recvdMsgTokens.get(0), clientId);
 				}
-
+				if(recvdMsgTokens.get(0).equals("READ")){
+					String objectName = recvdMsgTokens.get(1);
+					System.out.println("Read request for Object "+objectName+" from Client : "+recvdMsgTokens.get(2));
+					
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
