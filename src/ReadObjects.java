@@ -3,34 +3,34 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 public class ReadObjects {
 
-	
-	public void readObjects(String object){
+	static public void readObjects(String object, int clientId) {
+
+		System.out.println(" ENTER READ OBJECTS METHOD....");
 		String line;
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(""));
-			
-			while((line = reader.readLine())!=null){
-				
-				String[] data = line.split(",");
-				
-				if(data[1].equals(object)){
-					String value = data[3];
-					
-					System.out.println("Value of "+object+" is : "+value);
+			BufferedReader reader = new BufferedReader(new FileReader("/home/rohit/kepler_workspace/FileReplicationServer/Objects"));
+			MessageSender msgSender = new MessageSender();
+			while ((line = reader.readLine()) != null) {
+
+				if (line.contains(object)) {
+
+					String[] data = line.split(",");
+					System.out.println("------OBJECT requested for READ------");
+					System.out.println("Object : " + object + ", Value : " + data[2]);
+					msgSender.sendMesageToClient(clientId, Message.READ_RESPONSE.toString() + "," + line);
+					return;
 				}
 			}
-			
-			
-			
+
+			msgSender.sendMesageToClient(clientId, Message.READ_RESPONSE.toString() + "," + "NO_SUCH_OBJECTS_FOUND");
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }

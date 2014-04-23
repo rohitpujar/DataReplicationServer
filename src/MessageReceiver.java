@@ -44,6 +44,14 @@ public class MessageReceiver extends Thread {
 				if(recvdMsgTokens.get(0).equals("READ")){
 					String objectName = recvdMsgTokens.get(1);
 					System.out.println("Read request for Object "+objectName+" from Client : "+recvdMsgTokens.get(2));
+					ReadObjects.readObjects(objectName, Integer.parseInt(recvdMsgTokens.get(2)));
+					
+				}
+				
+				if(recvdMsgTokens.get(0).equals("WRITE")){
+					String objectToWrite = recvdMsgTokens.get(1)+","+recvdMsgTokens.get(2);
+					System.out.println("Write request, object & value : "+objectToWrite);
+					WriteObjects.writeObject(recvdMsgTokens.get(1), recvdMsgTokens.get(2));
 					
 				}
 			}

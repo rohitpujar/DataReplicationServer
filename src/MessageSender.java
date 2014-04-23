@@ -18,8 +18,10 @@ public class MessageSender {
 
 	}
 
-	public void sendMesageToClient(int nodeId,String message){
+	public void sendMesageToClient(int nodeId,String msg){
 		try{
+			
+			String message = msg+","+SocketConnections.getNodeId();
 			dos = new DataOutputStream(SocketConnections.getClientSocketConnections().get(nodeId).getOutputStream());
 			System.out.println("			& Message to client "+nodeId+" : "+message);
 			dos.writeUTF(message);
