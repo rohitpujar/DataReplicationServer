@@ -1,7 +1,7 @@
 Partition1 #
-server 1,2
+server 0,1,2,3
 client 0,1
 
 Partition2 #
-server 0,3
-client 2,3
+server 4,5,6
+client 2,3,4

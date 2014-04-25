@@ -13,7 +13,7 @@ public class ParseFile {
 
 		BufferedReader readFile;
 		try {
-			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplicationServer/Config"));
+			readFile = new BufferedReader(new FileReader("G:\\UTD\\kepler\\FileReplicationServer\\Config"));
 			while ((line = readFile.readLine()) != null) {
 
 				if (!line.startsWith("#")) {
@@ -55,7 +55,7 @@ public class ParseFile {
 
 		BufferedReader readFile;
 		try {
-			readFile = new BufferedReader(new FileReader("/home/rohit/indigo_workspace/FileReplicationServer/PartitionConfig"));
+			readFile = new BufferedReader(new FileReader("G:\\UTD\\kepler\\FileReplicationServer\\PartitionConfig"));
 			while ((line = readFile.readLine()) != null) {
 
 				if (!line.startsWith("#")) { // to ignore comments, if any

@@ -7,10 +7,9 @@ public class ReadObjects {
 
 	static public void readObjects(String object, int clientId) {
 
-		System.out.println(" ENTER READ OBJECTS METHOD....");
 		String line;
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("/home/rohit/kepler_workspace/FileReplicationServer/Objects"));
+			BufferedReader reader = new BufferedReader(new FileReader("G:\\UTD\\kepler\\FileReplicationServer\\Objects"));
 			MessageSender msgSender = new MessageSender();
 			while ((line = reader.readLine()) != null) {
 

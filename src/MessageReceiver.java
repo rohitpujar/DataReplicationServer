@@ -37,7 +37,7 @@ public class MessageReceiver extends Thread {
 				}
 				
 				if(recvdMsgTokens.get(0).equals("PING")){
-					System.out.println("Inside PING receiver ...");
+//					System.out.println("Inside PING receiver ...");
 					int clientId = Integer.parseInt(recvdMsgTokens.get(1));
 					pingMessage(recvdMsgTokens.get(0), clientId);
 				}
@@ -50,7 +50,7 @@ public class MessageReceiver extends Thread {
 				
 				if(recvdMsgTokens.get(0).equals("WRITE")){
 					String objectToWrite = recvdMsgTokens.get(1)+","+recvdMsgTokens.get(2);
-					System.out.println("Write request, object & value : "+objectToWrite);
+//					System.out.println("Write request, object & value : "+objectToWrite);
 					WriteObjects.writeObject(recvdMsgTokens.get(1), recvdMsgTokens.get(2));
 					
 				}
@@ -64,7 +64,7 @@ public class MessageReceiver extends Thread {
 	private void pingMessage(String message,int clientId){
 		msgSender = new MessageSender();
 		Boolean status = PartitionHandler.getClientConnectionStatus(clientId);
-		System.out.println("Connection to client "+clientId+" : "+status);
+		System.out.println("#Connection to client "+clientId+" : "+status);
 		msgSender.sendMesageToClient(clientId, status.toString());
 		
 	}
