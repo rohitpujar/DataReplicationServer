@@ -23,7 +23,7 @@ public class ReadObjects {
 				}
 			}
 
-			msgSender.sendMesageToClient(clientId, Message.READ_RESPONSE.toString() + "," + "NO_SUCH_OBJECTS_FOUND");
+			msgSender.sendMesageToClient(clientId, Message.READ_RESPONSE.toString() + "," + Message.OBJECT_NOT_FOUND.toString());
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

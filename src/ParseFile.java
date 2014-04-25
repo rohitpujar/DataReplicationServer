@@ -64,33 +64,64 @@ public class ParseFile {
 					if (data[0].equals("Partition1")) {
 
 						line = readFile.readLine(); // read next line
-						String[] fileData = line.split(" "); // take only the node numbers which is after the space
-						if (fileData[0].equals("server")) { // these nodes belong to server partition information
-							String[] serverPartition = fileData[1].split(","); // they are separated by comma, so fetch them
+						String[] fileData = line.split(" "); // take only the
+						// node numbers
+						// which is
+						// after the
+						// space
+						if (fileData[0].equals("server")) { // these nodes
+							// belong to server
+							// partition
+							// information
+							String[] serverPartition = fileData[1].split(","); // they
+							// are
+							// separated
+							// by
+							// comma,
+							// so
+							// fetch
+							// them
 
 							serverPartitionData1 = new int[serverPartition.length];
 							for (int i = 0; i < serverPartition.length; i++) {
-								serverPartitionData1[i] = Integer.parseInt(serverPartition[i]); // the server partition is in the serverPartitionData1
+								serverPartitionData1[i] = Integer.parseInt(serverPartition[i]); // the
+								// server
+								// partition
+								// is
+								// in
+								// the
+								// serverPartitionData1
 							}
 						}
 						line = readFile.readLine();
 						String[] fileData1 = line.split(" ");
-						if (fileData1[0].equals("client")) { // similarly for client partition nodes information
+						if (fileData1[0].equals("client")) { // similarly for
+							// client
+							// partition
+							// nodes
+							// information
 							String[] clientPartition = fileData1[1].split(",");
 
 							clientPartitionData1 = new int[clientPartition.length];
 							for (int i = 0; i < clientPartition.length; i++) {
-								clientPartitionData1[i] = Integer.parseInt(clientPartition[i]); // client partition data is present here
+								clientPartitionData1[i] = Integer.parseInt(clientPartition[i]); // client
+								// partition
+								// data
+								// is
+								// present
+								// here
 							}
 						}
 						for (int i = 0; i < serverPartitionData1.length; i++) {
 							if (serverPartitionData1[i] == nodeId) {
-								// System.out.println("Node id " + nodeId + " Present here in server partition 1");
+								// System.out.println("Node id " + nodeId +
+								// " Present here in server partition 1");
 								createPartition(serverPartitionData1, clientPartitionData1);
 							}
 						}
 
-						// ********************** Partition 2 config information **************************
+						// ********************** Partition 2 config information
+						// **************************
 						line = readFile.readLine();
 						line = readFile.readLine();
 						line = readFile.readLine();
@@ -137,11 +168,13 @@ public class ParseFile {
 
 	private static void createPartition(int[] serverPartition, int[] clientPartition) {
 
-		System.out.println("---Initial partition status---");
-		PartitionHandler.displayConnectionStatusMap();
+		// System.out.println("---Initial partition status---");
+		// PartitionHandler.displayConnectionStatusMap();
 		PartitionHandler.createPartition(serverPartition, clientPartition);
 		System.out.println("----- Partition done -----");
 		PartitionHandler.displayConnectionStatusMap();
+		System.out.println("====================");
+		System.out.println();
 
 	}
 }

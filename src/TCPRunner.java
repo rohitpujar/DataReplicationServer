@@ -15,12 +15,14 @@ public class TCPRunner {
 		tcpRunner.listenForConnections(nodeList, SocketConnections.getNodeId());
 		tcpRunner.connectToServers(nodeList, SocketConnections.getNodeId());
 
-		System.out.println("Select the following :");
+		if(SocketConnections.getNodeId() == 0){
+		System.out.println("##### Select the following :");
 		System.out.println("1 to create network partition");
 		Scanner in = new Scanner(System.in);
 		int input = in.nextInt();
 		if (input == 1) {
 			createPartition();
+		}
 		}
 
 	}
@@ -55,6 +57,8 @@ public class TCPRunner {
 	}
 
 	private static void createPartition() {
+		MessageSender msgSender = new MessageSender();
+		msgSender.sendToAll(Message.PARTITION.toString());
 		ParseFile.parsePartitionConfigFile(SocketConnections.getNodeId());
 	}
 

@@ -54,6 +54,11 @@ public class MessageReceiver extends Thread {
 					WriteObjects.writeObject(recvdMsgTokens.get(1), recvdMsgTokens.get(2));
 					
 				}
+				
+				if(recvdMsgTokens.get(0).equals(Message.PARTITION.toString())){
+					System.out.println("Network will be partitioned!!!!");
+					ParseFile.parsePartitionConfigFile(SocketConnections.getNodeId());
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

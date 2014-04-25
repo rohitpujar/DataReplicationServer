@@ -1,5 +1,5 @@
 
 public enum Message {
 
-	READ_RESPONSE;
+	READ_RESPONSE,PARTITION,OBJECT_NOT_FOUND;
 }
