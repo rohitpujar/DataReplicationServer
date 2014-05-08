@@ -44,7 +44,13 @@ public class MessageReceiver extends Thread {
 				if(recvdMsgTokens.get(0).equals("READ")){
 					String objectName = recvdMsgTokens.get(1);
 					System.out.println("Read request for Object "+objectName+" from Client : "+recvdMsgTokens.get(2));
+					try{
 					ReadObjects.readObjects(objectName, Integer.parseInt(recvdMsgTokens.get(2)));
+					}catch(NumberFormatException nfe){
+						System.out.println("Exception while parsing Client ID. Input is probably wrong!! ");
+						msgSender = new MessageSender();
+						msgSender.sendMesageToClient(Integer.parseInt(recvdMsgTokens.get(3)), "** Please re check your selection **");
+					}
 					
 				}
 				
