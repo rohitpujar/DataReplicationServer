@@ -1,6 +1,5 @@
-DATA REPLICATION ACROSS SERVERS WITH FAULT TOLERANCE,HIGH AVAILABILITY AND INCREMENTAL SCALABILITY
-
-
+Data Replication across Servers with Fault tolerance,High Availability and Incremental Scalability
+--------------------------------------------------------------------------------------------------
 
 This is a Server version of Data replication system.
 
@@ -9,8 +8,8 @@ This is a Server version of Data replication system.
 * Node zero of server side is considered a special node, and it is the one that can communicate to other servers to indicate   them to create a network partition. Other than this server node zero is no different than other server nodes.
 
 
-Server Design
--------------
+SERVER DESIGN
+
 
 1.	For each object, we consider there is a server which acts as a primary server. This primary server is determined by the     value that the hash function generates on the object. The rest two servers act as secondary servers.
 2.	This distinction was important, since it facilitates us to maintain total ordering among the servers for data               replication. 
