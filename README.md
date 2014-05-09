@@ -1,4 +1,5 @@
-Data Replication across Servers with Fault tolerance,High Availability and Incremental Scalability
+DATA REPLICATION ACROSS SERVERS WITH FAULT TOLERANCE,HIGH AVAILABILITY AND INCREMENTAL SCALABILITY
+
 
 
 This is a Server version of Data replication system.
