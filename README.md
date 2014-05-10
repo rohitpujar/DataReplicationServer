@@ -3,6 +3,8 @@ Data Replication across Servers with Fault tolerance,High Availability and Incre
 
 This is a Server version of Data replication system.
 
+* The Client version of the system can be found at - https://github.com/rohitpujar/FileReplicationClient
+
 * Any number of servers can be initiated - Config file should contain the port numbers and host names. 
 * Network partition simulated - Partition can be configured through an external file.
 * Node zero of server side is considered a special node, and it is the one that can communicate to other servers to indicate   them to create a network partition. Other than this server node zero is no different than other server nodes.
