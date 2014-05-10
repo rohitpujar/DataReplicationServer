@@ -3,7 +3,7 @@ Data Replication across Servers with Fault tolerance,High Availability and Incre
 
 This is a Server version of Data replication system.
 
-* The Client version of the system can be found at - https://github.com/rohitpujar/FileReplicationClient
+* The Client version of the system can be found at - https://github.com/rohitpujar/DataReplicationClient
 
 * Any number of servers can be initiated - Config file should contain the port numbers and host names. 
 * Network partition simulated - Partition can be configured through an external file.
